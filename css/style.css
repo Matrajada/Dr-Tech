@@ -1,0 +1,944 @@
+/* Reset & Base */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    --primary: #0d8de8;
+    --secondary: #0d8de8;
+    --bg-light: #f5f5f5;
+    --text-dark: #111;
+    --transition: .3s ease;
+}
+
+body {
+    background: var(--bg-light);
+    overflow-x: hidden;
+    color: var(--text-dark);
+    font-size: 100%;
+}
+
+/* HEADER */
+
+header{
+    width:100%;
+    height:100px;
+    background:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 80px;
+
+    position:sticky;
+    top:0;
+    z-index:999;
+
+    border-bottom:1px solid #ddd;
+}
+
+.logo img{
+    width:230px;
+}
+
+nav ul{
+    display:flex;
+    gap:35px;
+    list-style:none;
+}
+
+nav a{
+    text-decoration:none;
+    color:#111;
+    font-weight:600;
+    transition:.3s;
+}
+
+nav a:hover,
+nav .active{
+    color:#2f80ff;
+}
+
+/* HERO SECTION*/
+.hero {
+    position: relative;
+    width: 100%;
+    /* Mudado de height para min-height para o container esticar se o zoom for muito grande */
+    min-height: calc(100vh - 100px); 
+    display: flex;
+    align-items: center;
+    background: white;
+    overflow: hidden;
+    padding: 40px 0; /* Garante um respiro nas extremidades */
+}
+
+.carousel {
+    width: 100%;
+    position: relative;
+}
+
+.hero-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 0 60px;
+}
+
+/* Garante que ambos os lados ocupem o mesmo espaço e não se esmaguem */
+.hero-content { 
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Garante que os textos alinhem à esquerda */
+}
+
+.hero-image { 
+    flex: 1; 
+    text-align: center; 
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-height: 450px; /* Evita que a imagem cresça descontroladamente no zoom */
+}
+
+/* SLIDES CONTROL */
+.slide {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    transition: opacity .7s ease;
+    pointer-events: none;
+}
+
+.slide.active {
+    opacity: 1;
+    position: relative;
+    pointer-events: auto;
+}
+
+/* TIPOGRAFIA RESPONSIVA (Unificada para não dar conflito) */
+.badge {
+    color: var(--secondary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px; /* Substituído o 'bottom' relativo por margin seguro */
+    display: inline-block;
+}
+
+.hero-content h1 {
+    font-size: clamp(32px, 4.5vw, 64px); /* Ajustado para um tamanho máximo mais seguro */
+    line-height: 1.1;
+    margin: 0 0 15px 0; /* Margens zeradas nas laterais para não desalinharem */
+    font-weight: 800;
+}
+
+.highlight-text {
+    color: var(--primary);
+    font-size: clamp(24px, 3.5vw, 44px);
+    line-height: 1.1;
+    margin: 0 0 20px 0; /* Margens zeradas nas laterais */
+    font-weight: 800;
+    display: block;
+}
+
+.hero-content p {
+    font-size: clamp(15px, 1.2vw, 18px); /* Texto do parágrafo agora também se adapta ao zoom */
+    margin: 0 0 30px 0; /* Margens zeradas nas laterais */
+    max-width: 500px;
+    line-height: 1.5;
+}
+
+/* Estilização base do botão de CTA para garantir que ele se comporte como bloco flexível */
+.btn-cta {
+    display: inline-block;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 30px;
+    text-align: center;
+    white-space: nowrap; /* Evita que o texto do botão quebre em duas linhas */
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+.btn-cta {
+    display: inline-block;
+    padding: 20px 40px;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    transition: var(--transition);
+    box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2);
+    text-align: center;
+}
+
+.btn-cta:hover { transform: translateY(-5px); filter: brightness(1.1); }
+
+/* CAROUSEL CONTROLS */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 10;
+    padding: 20px;
+    opacity: 0.5;
+    transition: .3s;
+}
+
+.arrow:hover { opacity: 1; color: var(--secondary); }
+.left-arrow { left: 20px; }
+.right-arrow { right: 20px; }
+
+.carousel-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background: #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dot.active { background: var(--primary); width: 30px; border-radius: 10px; }
+
+/* BENEFITS SECTION */
+.benefits {
+    padding: 100px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title h2 {
+    text-align: center;
+    font-size: clamp(24px, 4vw, 36px);
+    margin-bottom: 60px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: var(--transition);
+}
+
+.card:hover { transform: translateY(-10px); }
+
+.card-icon { font-size: 40px; margin-bottom: 20px; }
+
+.card h3 { margin-bottom: 15px; font-size: 20px; }
+
+.card p { color: #666; font-size: 15px; line-height: 1.6; }
+
+/* ================= SERVICES ================= */
+
+.services {
+    padding: 100px 20px;
+    background: var(--bg-light); /* Usando a variável definida na parte 1 */
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-header h2 {
+    font-size: clamp(30px, 4vw, 42px);
+    font-weight: 800;
+    color: var(--text-dark);
+}
+
+.section-header p {
+    color: #666;
+    margin-top: 10px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.service-card {
+    background: #fff;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    transition: var(--transition);
+}
+
+.service-image {
+    position: relative;
+    height: 350px;
+    overflow: hidden;
+}
+
+.service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.service-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 141, 232, 0.7); /* Azul Dr.Tech com transparência */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.service-overlay span {
+    color: white;
+    font-weight: 700;
+    border: 2px solid white;
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+
+.service-overlay span:hover{
+    transition: var(--transition);
+    background-color: #fff;
+    color: #1e88e5;
+}
+
+.service-overlay a{
+    text-decoration: none;
+
+}
+
+.service-info {
+    padding: 25px;
+}
+
+.service-info h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.service-info p {
+    color: #777;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* Hover Effects */
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.service-card:hover .service-image img {
+    transform: scale(1.1);
+}
+
+.service-card:hover .service-overlay {
+    opacity: 1;
+}
+
+/* ================= REVIEWS ================= */
+
+.reviews {
+    padding: 80px 20px;
+    background: #fff; /* Contraste com a seção de serviços */
+}
+
+.reviews h2 {
+    text-align: center;
+    font-size: clamp(28px, 4vw, 38px);
+    margin-bottom: 50px;
+}
+
+.reviews-slider {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.review-card {
+    width: 100%;
+    max-width: 400px;
+    transition: var(--transition);
+}
+
+.review-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    filter: grayscale(20%);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.review-card:hover {
+    transform: scale(1.05);
+    filter: grayscale(0%);
+}
+
+/* CONTAINER DO CARROSSEL */
+        .carousel-wrapper {
+            width: 100%;
+            max-width: 1400px;
+            position: relative;
+            padding: 60px 0;
+            overflow: hidden; /* Esconde os cards que saem da tela */
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 20px;
+            cursor: grab;
+            user-select: none;
+            /* O scroll-behavior: smooth atrapalha o salto do loop infinito, 
+               então controlamos a suavidade via JS ou deixamos natural */
+        }
+
+        .carousel-track:active {
+            cursor: grabbing;
+        }
+
+        /* ESTILO DOS CARDS */
+        .review-card {
+            min-width: 340px;
+            max-width: 340px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            
+            /* Estado inicial: Fundo, Desfocado e Transparente */
+            opacity: 0.3;
+            transform: scale(0.8);
+            filter: blur(3px);
+        }
+
+        /* CARD EM FOCO (CENTRAL) */
+        .review-card.is-focused {
+            opacity: 1;
+            transform: scale(1.1);
+            filter: blur(0);
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        /* CONTEÚDO DO CARD */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #0d8de8;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .user-info strong {
+            display: block;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .user-info span {
+            font-size: 13px;
+            color: #777;
+        }
+
+        .stars {
+            color: #fbbc05;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .review-text {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* BARRA DE PROGRESSO */
+        .progress-bar-container {
+            width: 200px;
+            height: 4px;
+            background: #ddd;
+            margin-top: 40px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .progress-fill {
+            width: 30%;
+            height: 100%;
+            background: #0d8de8;
+            border-radius: 10px;
+            position: absolute;
+            left: 0;
+            transition: left 0.1s linear;
+        }
+
+        /* Estilo base das setas */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:focus{
+    outline: 2px solid #111;
+}
+
+.nav-btn:hover {
+    background-color: white;  /* Ou a cor de sua preferência */
+    color: rgb(27, 16, 16);
+}
+
+/* Posicionamento individual */
+.prev-btn {
+    left: 20px;
+}
+
+.next-btn {
+    right: 20px;
+}
+
+.section-sobre {
+    padding: 80px 20px;
+    background-color: #ffffff; /* Fundo branco alinhado com o restante do seu site */
+    font-family: 'Montserrat', sans-serif; /* Ajuste para a fonte principal do seu site */
+    color: #1a1a1a;
+  }
+
+  .container-sobre {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+  }
+
+  .sobre-conteudo {
+    flex: 1;
+    text-align: left; /* Alinhamento à esquerda para melhor legibilidade */
+  }
+
+  .sobre-titulo {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .sobre-texto {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #4a4a4a;
+  }
+
+  .sobre-subtitulo {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+
+  .sobre-lista {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 35px;
+  }
+
+  .sobre-lista li {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 25px;
+    color: #4a4a4a;
+  }
+
+  /* Ícone de check azul antes de cada item da lista */
+  .sobre-lista li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #007bff; /* Ajuste para o azul exato da sua marca, ex: #0082f4 */
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  /* Botão azul de CTA */
+  .btn-sobre {
+    display: inline-block;
+    padding: 14px 28px;
+    background-color: #0082f4; /* Azul Dr. Tech */
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 30px; /* Bordas arredondadas como os botões que você já usa */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 130, 244, 0.2);
+  }
+
+  .btn-sobre:hover {
+    background-color: #006bce;
+    transform: translateY(-2px);
+  }
+
+  .sobre-imagem {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sobre-imagem img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 12px; /* Cantos levemente arredondados combinando com os cards de serviços */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    object-fit: cover;
+  }
+
+  
+
+/* ================= FOOTER ================= */
+
+.footer{
+
+    width:100%;
+
+    background:#ffffff;
+
+    padding:60px 40px 30px;
+
+    border-top:1px solid #bdbdbd;
+}
+
+.footer-container{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:50px;
+
+    flex-wrap:wrap;
+}
+
+/* LOGO */
+
+.footer-logo img{
+
+    width:220px;
+
+    margin-bottom:20px;
+}
+
+.footer-logo p{
+
+    font-size:14px;
+
+    line-height:1.5;
+
+    font-weight:600;
+
+    margin-bottom:40px;
+}
+
+.footer-logo span{
+
+    font-size:12px;
+
+    color:#ffffff;
+}
+
+/* LINKS E SERVIÇOS */
+
+.footer-links h3,
+.footer-services h3{
+
+    margin-bottom:20px;
+
+    font-size:20px;
+}
+
+.footer-links ul,
+.footer-services ul{
+
+    list-style:none;
+}
+
+.footer-links li,
+.footer-services li{
+
+    margin-bottom:12px;
+}
+
+.footer-links a,
+.footer-services a{
+
+    text-decoration:none;
+
+    color:#222;
+
+    transition:.3s;
+}
+
+.footer-links a:hover,
+.footer-services a:hover{
+
+    color:#0d8de8;
+}
+
+/* SOCIAL */
+
+.footer-social{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+}
+
+.footer-social a{
+
+    width:55px;
+
+    height:55px;
+
+    background:black;
+
+    color:white;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-decoration:none;
+
+    font-size:28px;
+
+    transition:.3s;
+}
+
+.footer-social a:hover{
+
+    transform:translateY(-5px);
+
+    background:#0d8de8;
+}
+
+/* ================= RESPONSIVO ================= */
+
+@media(max-width:768px){
+
+    .about h2{
+
+        font-size:36px;
+    }
+
+    .about-text p{
+
+        font-size:17px;
+    }
+
+    .footer-container{
+
+        flex-direction:column;
+
+        align-items:center;
+
+        text-align:center;
+    }
+
+    .footer-social{
+
+        justify-content:center;
+    }
+
+}
+
+/* ================= RESPONSIVO ================= */
+
+/* Esconde as setas em telas com largura de até 768px (celulares e tablets pequenos) */
+@media (max-width: 768px) {
+    #prevBtn, 
+    #nextBtn {
+        display: none !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero { height: auto; padding: 80px 0; }
+    .hero-container { flex-direction: column; text-align: center; }
+    .hero-content p { margin: 0 auto 30px; }
+    .nav-links { display: none; } /* Ideal adicionar menu hambúrguer aqui */
+}
+
+@media (max-width: 480px) {
+    .header-container { justify-content: center; }
+    .arrow { display: none; } /* Esconde setas no mobile para não poluir */
+}
+
+@media (max-width: 768px) {
+    .services {
+        padding: 60px 15px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr; /* Coluna única no mobile */
+    }
+
+    .service-image {
+        height: 220px;
+    }
+
+    .review-card {
+        max-width: 90%;
+    }
+}
+
+@media(max-width:768px){
+
+    .menu-toggle{
+        display:block;
+    }
+
+    nav{
+
+        position:absolute;
+
+        top:100px;
+
+        left:-100%;
+
+        width:100%;
+
+        background:white;
+
+        transition:.4s;
+    }
+
+    nav.active{
+        left:0;
+    }
+
+    nav ul{
+
+        flex-direction:column;
+
+        padding:30px;
+    }
+
+}
+
+#carouselWrapper{
+
+    cursor:grab;
+
+    touch-action:pan-y;
+}
+
+#carouselWrapper:active{
+
+    cursor:grabbing;
+}
+
+/* Responsividade para Celulares */
+  @media (max-width: 768px) {
+    .container-sobre {
+      flex-direction: column; /* Empilha o texto e a imagem no celular */
+      gap: 35px;
+    }
+    
+    .sobre-conteudo {
+      text-align: center;
+    }
+
+    .sobre-lista li {
+      text-align: left;
+    }
+
+    .sobre-titulo {
+      font-size: 2rem;
+    }
+
+    .sobre-imagem img {
+      max-width: 100%;
+    }
+  }
